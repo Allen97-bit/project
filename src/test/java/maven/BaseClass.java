@@ -1,10 +1,17 @@
 package maven;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -176,6 +183,39 @@ public class BaseClass {
 		String text = al.getText();
 		System.out.println(text);
 	}
+	
+	public String readerExcel(String path,String sheetName, int rowNum, int colNum) {
+		String data1="";
+		try {
+			File f = new File(path);
+			FileInputStream fin = new FileInputStream(f);
+			Workbook workbook = new XSSFWorkbook(fin);
+			Sheet sheet = workbook.getSheet(sheetName);
+			Row row = sheet.getRow(rowNum);
+			Cell cell = row.getCell(colNum);
+			
+			data1 = cell.getStringCellValue();
+			System.out.println(data1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data1;
+	}
+
+	public void writeExcel(String path,String sheetName, int rowNum, int colNum, String value) {
+		try {
+			File f = new File(path);
+			FileInputStream fin = new FileInputStream(f);
+			Workbook workbook = new XSSFWorkbook(fin);
+			Sheet sheet = workbook.getSheet(sheetName);
+			Row row = sheet.createRow(rowNum);
+			Cell createCell = row.createCell(colNum);
+			createCell.setCellValue(value);
+			FileOutputStream fout = new FileOutputStream(f);
+			workbook.write(fout);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	public static void closeWindow() {
 		driver.close();
