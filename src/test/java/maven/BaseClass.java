@@ -25,7 +25,7 @@ public class BaseClass {
 		driver = new ChromeDriver();
 	}
 
-	public static void openBrowser(String url) {
+	public static void borwserLaunch(String url) {
 		driver.get(url);
 	}
 
