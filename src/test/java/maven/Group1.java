@@ -17,4 +17,12 @@ public class Group1 {
 	public void tc3() {
 		System.out.println("TC 3");
 	}
+	private void tc5() {
+
+	}
+	
+	private void tc9() {
+
+	}
+	
 }
